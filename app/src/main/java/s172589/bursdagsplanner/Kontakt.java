@@ -7,6 +7,14 @@ public class Kontakt {
     int _ID;
     String navn;
     int tlf;
+    String dato;
+
+    public Kontakt(String dato, int _ID, String navn, int tlf) {
+        this.dato = dato;
+        this._ID = _ID;
+        this.navn = navn;
+        this.tlf = tlf;
+    }
 
     public Kontakt(int _ID, String navn, int tlf) {
         this._ID = _ID;
@@ -41,4 +49,23 @@ public class Kontakt {
     public void set_ID(int _ID) {
         this._ID = _ID;
     }
+
+    public String getDato() {
+        return dato;
+    }
+
+    public void setDato(String dato) {
+        this.dato = dato;
+    }
+
+    public int get_ID() {
+
+        return _ID;
+    }
+
+    public Kontakt(int _ID) {
+
+        this._ID = _ID;
+    }
+
 }
