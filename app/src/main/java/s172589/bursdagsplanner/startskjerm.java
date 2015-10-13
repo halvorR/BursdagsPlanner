@@ -1,8 +1,5 @@
 package s172589.bursdagsplanner;
-// Hei, dette er en endring som er gjort i TextPad.
-// VISES DENNE ENRINGEN DA? DEN ER FRA FØK IN GS ADHD STD
-// ADHD STD står for Android Studio
-// Nok en kommentar for kommentarens sjyld.
+// Endret navn på Startskjerm.
 
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
