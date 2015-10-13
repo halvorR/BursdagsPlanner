@@ -2,6 +2,7 @@ package s172589.bursdagsplanner;
 // Endret navn på Startskjerm.
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -32,18 +33,24 @@ public class Startskjerm extends AppCompatActivity {
         Context c = getApplicationContext();
         int dur = Toast.LENGTH_SHORT;
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.settings) {
-            Toast toast = Toast.makeText(c,"Settings klikket",dur);
-            toast.show();
-            return true;
-        }
-        if (id == R.id.lag_ny) {
-            Toast toast = Toast.makeText(c,"Lag ny klikket",dur);
-            toast.show();
-            return true;
-        }
+        switch(id) {
+            case R.id.settings:
+                Toast toast = Toast.makeText(c,"Settings klikket",dur);
+                toast.show();
+                return true;
+            case R.id.lag_ny:
+                toast = Toast.makeText(c,"Lag ny klikket",dur);
+                toast.show();
 
-        return super.onOptionsItemSelected(item);
+                Intent i = new Intent(this, LeggTilNy.class);
+                startActivity(i);
+                return true;
+            case R.id.endreTid:
+                toast = Toast.makeText(c,"endreTid klikket",dur);
+                toast.show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

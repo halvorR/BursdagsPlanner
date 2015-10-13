@@ -16,6 +16,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".LeggTilNy"
+            android:label="@string/leggTil"
+            android:parentActivityName=".Startskjerm">
+        </activity>
     </application>
 
 </manifest>
