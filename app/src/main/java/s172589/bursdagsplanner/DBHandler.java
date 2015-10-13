@@ -42,12 +42,13 @@ public class DBHandler extends SQLiteOpenHelper {
             onCreate(db);
         }
 
-        public void leggTilKontakt(Kontakt kontakt){
+        public void leggTilKontakt(String n,int t,String d){
+            // Dato vil sannsynligvis sendes med på annen måte, venter på litt research.
             SQLiteDatabase db = this.getWritableDatabase();
             ContentValues values = new ContentValues();
-            values.put(KEY_NAME, kontakt.getNavn());
-            values.put(KEY_PH_NO, kontakt.getTlf());
-            values.put(KEY_DATE,kontakt.getDato());
+            values.put(KEY_NAME, n);
+            values.put(KEY_PH_NO, t);
+            values.put(KEY_DATE, d);
             db.insert(TABLE_KONTAKTER, null, values);
             db.close();
 

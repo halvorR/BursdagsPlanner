@@ -3,10 +3,12 @@ package s172589.bursdagsplanner;
 // VISES DENNE ENRINGEN DA? DEN ER FRA FØK IN GS ADHD STD
 // ADHD STD står for Android Studio
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 public class Startskjerm extends AppCompatActivity {
 
@@ -29,9 +31,18 @@ public class Startskjerm extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+        Context c = getApplicationContext();
+        int dur = Toast.LENGTH_SHORT;
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.settings) {
+            Toast toast = Toast.makeText(c,"Settings klikket",dur);
+            toast.show();
+            return true;
+        }
+        if (id == R.id.lag_ny) {
+            Toast toast = Toast.makeText(c,"Lag ny klikket",dur);
+            toast.show();
             return true;
         }
 
