@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class startskjerm extends AppCompatActivity {
+public class Startskjerm extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
