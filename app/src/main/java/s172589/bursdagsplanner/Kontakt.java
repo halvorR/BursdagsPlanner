@@ -9,9 +9,8 @@ public class Kontakt {
     int tlf;
     String dato;
 
-    public Kontakt(String dato, int _ID, String navn, int tlf) {
+    public Kontakt(String dato, String navn, int tlf) {
         this.dato = dato;
-        this._ID = _ID;
         this.navn = navn;
         this.tlf = tlf;
     }

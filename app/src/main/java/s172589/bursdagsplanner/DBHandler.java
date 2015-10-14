@@ -20,7 +20,7 @@ public class DBHandler extends SQLiteOpenHelper {
         static String KEY_ID="_ID";
         static String KEY_NAME= "Navn";
         static String KEY_PH_NO= "Telefon";
-        static String KEY_DATE="Fødselsdato";
+        static String KEY_DATE="Fodselsdato";
         static int DATABASE_VERSION=1;
         static String DATABASE_NAME= "Telefonkontakter";
 
@@ -42,18 +42,18 @@ public class DBHandler extends SQLiteOpenHelper {
             onCreate(db);
         }
 
-        public void leggTilKontakt(String n,int t,String d){
+        public void leggTilKontakt(Kontakt k){
             // Dato vil sannsynligvis sendes med på annen måte, venter på litt research.
             SQLiteDatabase db = this.getWritableDatabase();
             ContentValues values = new ContentValues();
-            values.put(KEY_NAME, n);
-            values.put(KEY_PH_NO, t);
-            values.put(KEY_DATE, d);
+
+            values.put(KEY_NAME, k.getNavn());
+            values.put(KEY_DATE, k.getDato());
+            values.put(KEY_PH_NO, k.getTlf());
             db.insert(TABLE_KONTAKTER, null, values);
             db.close();
-
         }
-        public	List<Kontakt>	finnAlleKontakter(){
+        public List<Kontakt> finnAlleKontakter(){
             List<Kontakt> kontaktListe = new ArrayList<Kontakt>();
             String selectQuery = "SELECT * FROM " +	TABLE_KONTAKTER;
             SQLiteDatabase db =	this.getWritableDatabase();
