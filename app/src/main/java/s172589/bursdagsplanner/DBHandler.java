@@ -74,4 +74,35 @@ public class DBHandler extends SQLiteOpenHelper {
             return kontaktListe;
         }
 
+    public int oppdaterKontakt(Kontakt k) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(KEY_NAME, k.getNavn());
+        values.put(KEY_PH_NO, k.getTlf());
+        int endret = db.update(TABLE_KONTAKTER, values, KEY_ID + "= ?", new String[]{String.valueOf(k.get_ID())});
+        db.close();
+        return endret;
+    }
+
+    public void slettKontakt(Kontakt k) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_KONTAKTER, KEY_ID + " =?", new String[]{String.valueOf(k.get_ID())});
+        db.close();
+    }
+
+    public Kontakt finnKontakt(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.query(TABLE_KONTAKTER, new String[]{
+                KEY_ID, KEY_NAME, KEY_PH_NO
+        }, KEY_ID + "=?", new String[]{
+                String.valueOf(id)
+        }, null, null, null, null);
+        if(c != null)
+            c.moveToFirst();
+        Kontakt k = new Kontakt(Integer.parseInt(c.getString(0)),c.getString(1), Integer.parseInt(c.getString(2)));
+        c.close();
+        db.close();
+
+        return k;
+    }
     }
