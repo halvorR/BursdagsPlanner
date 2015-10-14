@@ -30,8 +30,8 @@ public class DBHandler extends SQLiteOpenHelper {
 
         @Override
         public void onCreate(SQLiteDatabase db) {
-            String LAG_TABELL = "CREATE TABLE " + TABLE_KONTAKTER +"(" + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT,"
-                    + KEY_DATE + "TEXT," + KEY_PH_NO + " INTEGER" + ")";
+            String LAG_TABELL = "CREATE TABLE " + TABLE_KONTAKTER +"(" + KEY_ID + " INTEGER PRIMARY KEY," + KEY_PH_NO + " INTEGER,"
+                    + KEY_NAME + " TEXT," + KEY_DATE + " TEXT" + ")";
             Log.d("SQL", LAG_TABELL);
             db.execSQL(LAG_TABELL);
         }
@@ -62,8 +62,9 @@ public class DBHandler extends SQLiteOpenHelper {
                 do{
                     Kontakt	kontakt	= new Kontakt();
                     kontakt.set_ID(Integer.parseInt(cursor.getString(0)));
-                    kontakt.setNavn(cursor.getString(1));
-                    kontakt.setTlf(Integer.parseInt(cursor.getString(2)));
+                    kontakt.setTlf(Integer.parseInt(cursor.getString(1)));
+                    kontakt.setNavn(cursor.getString(2));
+                    kontakt.setDato(cursor.getString(3));
                     kontaktListe.add(kontakt);
                 }
                 while (cursor.moveToNext());

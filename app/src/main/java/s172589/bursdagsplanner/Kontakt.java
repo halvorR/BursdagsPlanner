@@ -41,9 +41,7 @@ public class Kontakt {
         this.navn = navn;
     }
 
-    public void setTlf(int tlf) {
-        this.tlf = tlf;
-    }
+    public void setTlf(int tlf) { this.tlf = tlf; }
 
     public void set_ID(int _ID) {
         this._ID = _ID;
