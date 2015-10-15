@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -110,18 +111,26 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
     public List<Kontakt> finnBursdag(){
-        List<Kontakt> dagensBursdagsbarn = new ArrayList<>();
         List<Kontakt> alleKontakter = finnAlleKontakter();
+        List<Kontakt> dagensBursdagsbarn = new ArrayList<>();
 
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
         Calendar dagens = Calendar.getInstance();
-        Calendar sjekk;
-//        for(Kontakt k : alleKontakter){
-//            dagens.compareTo(dagens);
-//        }
+        format.setCalendar(dagens);
 
+        String dagensF = format.format(dagens.getTime());
+        Log.d("FINNB", dagensF);
 
-        Log.d("FINNBURSDAG", dagens.toString() + alleKontakter.toString());
-
+        for(Kontakt k : alleKontakter){
+            try {
+                if(k.getDato().equals(dagensF)){
+                    dagensBursdagsbarn.add(k);
+                    Log.d("FINNK", dagensBursdagsbarn.toString());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         return dagensBursdagsbarn;
     }
 }
