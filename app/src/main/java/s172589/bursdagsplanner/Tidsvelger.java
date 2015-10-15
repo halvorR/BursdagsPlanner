@@ -1,5 +1,6 @@
 package s172589.bursdagsplanner;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +9,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TimePicker;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
 import java.util.Calendar;
 
 /**
@@ -19,8 +24,7 @@ public class Tidsvelger extends AppCompatActivity {
     private Button lagreKnapp,avbrytKnapp;
     private int time;
     private int minutt;
-
-    static final int TIME_DIALOG_ID = 999;
+    String MY_FILE_NAME = "tid";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -32,10 +36,20 @@ public class Tidsvelger extends AppCompatActivity {
 
     }
 
-    public void lagreTid() {
+    public void lagreTid() throws FileNotFoundException {
         int timeValg = tidsvelger.getCurrentHour();
         int minuttValg = tidsvelger.getCurrentMinute();
         Log.d("\r\nlagreTid() kalt:","Tiden er: " + timeValg +":"+ minuttValg);
+
+        try {
+            FileOutputStream fileout = openFileOutput(MY_FILE_NAME, Context.MODE_PRIVATE);
+            OutputStreamWriter outputWriter=new OutputStreamWriter(fileout);
+            outputWriter.write("INN HER MÅ TIDEN LEGGES! PARSE STRING");
+            outputWriter.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -61,7 +75,11 @@ public class Tidsvelger extends AppCompatActivity {
 
             @Override
             public void onClick(View v){
-                lagreTid();
+                try {
+                    lagreTid();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
                 finish();
             }
         });
