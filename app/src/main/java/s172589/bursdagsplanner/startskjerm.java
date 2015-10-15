@@ -94,6 +94,10 @@ public class Startskjerm extends AppCompatActivity {
             case R.id.endreTid:
                 toast = Toast.makeText(c,"endreTid klikket",dur);
                 toast.show();
+
+                Intent m = new Intent(this, Meldingsvindu.class);
+                startActivity(m);
+
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
