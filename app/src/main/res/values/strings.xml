@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">BursdagsPlanner</string>
     <string name="leggTil">Legg til</string>
+    <string name="melding">Skriv melding</string>
+    <string name="tidsvelger">Velg tidspunkt</string>
 
     <string name="hello_world">Oversikt over kontakter!</string>
     <string name="action_settings">Settings</string>
