@@ -6,8 +6,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -90,6 +92,7 @@ public class DBHandler extends SQLiteOpenHelper {
         db.close();
     }
 
+
     public Kontakt finnKontakt(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.query(TABLE_KONTAKTER, new String[]{
@@ -105,4 +108,20 @@ public class DBHandler extends SQLiteOpenHelper {
 
         return k;
     }
+
+    public List<Kontakt> finnBursdag(){
+        List<Kontakt> dagensBursdagsbarn = new ArrayList<>();
+        List<Kontakt> alleKontakter = finnAlleKontakter();
+
+        Calendar dagens = Calendar.getInstance();
+        Calendar sjekk;
+//        for(Kontakt k : alleKontakter){
+//            dagens.compareTo(dagens);
+//        }
+
+
+        Log.d("FINNBURSDAG", dagens.toString() + alleKontakter.toString());
+
+        return dagensBursdagsbarn;
     }
+}
