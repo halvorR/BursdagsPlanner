@@ -30,6 +30,7 @@ public class Tidsvelger extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tidsvelger);
+        tidsvelger = (TimePicker) findViewById(R.id.timePicker);
         tidsvelger.setIs24HourView(true);
         visRiktigTid();
         lyttere();
@@ -39,7 +40,7 @@ public class Tidsvelger extends AppCompatActivity {
     public void lagreTid() throws FileNotFoundException {
         int timeValg = tidsvelger.getCurrentHour();
         int minuttValg = tidsvelger.getCurrentMinute();
-        Log.d("\r\nlagreTid() kalt:","Tiden er: " + timeValg +":"+ minuttValg);
+        Log.d("lagreTid() kalt:","Tiden er: " + timeValg +":"+ minuttValg);
 
         try {
             FileOutputStream fileout = openFileOutput(MY_FILE_NAME, Context.MODE_PRIVATE);
@@ -55,8 +56,6 @@ public class Tidsvelger extends AppCompatActivity {
 
     public void visRiktigTid() {
 
-        tidsvelger = (TimePicker) findViewById(R.id.timePicker);
-
         final Calendar c = Calendar.getInstance();
         time = c.get(Calendar.HOUR_OF_DAY);
         minutt = c.get(Calendar.MINUTE);
@@ -70,7 +69,6 @@ public class Tidsvelger extends AppCompatActivity {
         lagreKnapp = (Button) findViewById(R.id.lagreTid);
         avbrytKnapp = (Button) findViewById(R.id.avbrytTid);
 
-        Button lagreKnapp = (Button) findViewById(R.id.lagreNy);
         lagreKnapp.setOnClickListener(new View.OnClickListener(){
 
             @Override

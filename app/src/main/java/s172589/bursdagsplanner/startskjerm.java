@@ -90,14 +90,19 @@ public class Startskjerm extends AppCompatActivity {
 
                 Intent i = new Intent(this, LeggTilNy.class);
                 startActivity(i);
+
                 return true;
             case R.id.endreTid:
                 toast = Toast.makeText(c,"endreTid klikket",dur);
                 toast.show();
 
+                Intent t = new Intent(this, Tidsvelger.class);
+                startActivity(t);
+
+                return true;
+            case R.id.melding:
                 Intent m = new Intent(this, Meldingsvindu.class);
                 startActivity(m);
-
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
