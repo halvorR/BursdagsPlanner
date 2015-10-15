@@ -19,6 +19,7 @@ public class LeggTilNy extends AppCompatActivity {
     private String navn, dato;
     private int telefonNr;
     private EditText navnFelt,telefonFelt,datoFelt;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +52,8 @@ public class LeggTilNy extends AppCompatActivity {
 
         List<Kontakt> kontakter = db.finnAlleKontakter();
         for (Kontakt k : kontakter) {
-            String log = "Id: "+ k.get_ID() + "\r\nNavn: " + k.getNavn() + "\r\nTelefonnr: " + k.getTlf();
+            String log = "\r\nLeggTilNy-klassen rapporterer at ny kontakt blir lagret, med data:" +
+                    "\r\nId: "+ k.get_ID() + "\r\nNavn: " + k.getNavn() + "\r\nTelefonnr: " + k.getTlf() + "\r\nDato: " + k.getDato();
             Log.d("Navn: ", log);
         }
         Toast toast = Toast.makeText(c, navnFelt.getText().toString()+" lagret! Hurra!",dur);

@@ -5,27 +5,69 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Startskjerm extends AppCompatActivity {
+
+    ListView listViewDagens, listViewAlle;
+    DBHandler db = new DBHandler(this);
+    ArrayAdapter ListAdapter;
+
+    public void mekkListe() {
+        listViewDagens = (ListView) findViewById(R.id.listeDagens);
+        List<Kontakt> dagens = db.finnBursdag();
+        if(dagens.size()>0) // check if list contains items.
+        {
+            List<String> navnListe = new ArrayList<>();
+            for (Kontakt k : dagens) {
+                navnListe.add(k.getNavn());
+            }
+            ListAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, navnListe);
+            listViewDagens.setAdapter(ListAdapter);
+        }
+        listViewAlle = (ListView) findViewById(R.id.listeAlle);
+        List<Kontakt> alle = db.finnAlleKontakter();
+        if(alle.size()>0) // check if list contains items.
+        {
+            List<String> navnListe = new ArrayList<>();
+            for (Kontakt k : alle) {
+                navnListe.add(k.getNavn());
+            }
+            ListAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, navnListe);
+            listViewAlle.setAdapter(ListAdapter);
+        }
+        else
+        {
+            Toast.makeText(Startskjerm.this,"Ingen kontakter å vise",Toast.LENGTH_LONG).show();
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_startskjerm);
-
+        mekkListe();
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_startskjerm, menu);
         return true;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mekkListe();
     }
 
     @Override
