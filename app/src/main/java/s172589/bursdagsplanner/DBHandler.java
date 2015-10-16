@@ -76,16 +76,6 @@ public class DBHandler extends SQLiteOpenHelper {
             return kontaktListe;
         }
 
-    public int oppdaterKontakt(Kontakt k) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(KEY_NAME, k.getNavn());
-        values.put(KEY_PH_NO, k.getTlf());
-        int endret = db.update(TABLE_KONTAKTER, values, KEY_PH_NO + "= ?", new String[]{String.valueOf(k.getTlf())});
-        db.close();
-        return endret;
-    }
-
     public void slettKontakt(Kontakt k) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_KONTAKTER, KEY_PH_NO + " =?", new String[]{String.valueOf(k.getTlf())});
@@ -94,18 +84,21 @@ public class DBHandler extends SQLiteOpenHelper {
 
 
     public Kontakt finnKontakt(int id) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor c = db.query(TABLE_KONTAKTER, new String[]{KEY_PH_NO, KEY_NAME},
-                KEY_PH_NO + "=?", new String[]{
-                String.valueOf(id)
-        }, null, null, null, null);
-        if(c != null)
-            c.moveToFirst();
-        Kontakt k = new Kontakt(c.getString(0),c.getString(1), Integer.parseInt(c.getString(2)));
-        c.close();
+        Kontakt	kontakt	= new Kontakt();
+        String selectQuery = "SELECT * FROM " +	TABLE_KONTAKTER + " WHERE " + KEY_PH_NO + " = " + id;
+        SQLiteDatabase db =	this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if	(cursor.moveToFirst())	{
+                kontakt.setTlf(Integer.parseInt(cursor.getString(0)));
+                kontakt.setNavn(cursor.getString(1));
+                kontakt.setDato(cursor.getString(2));
+                cursor.close();
+                db.close();
+                return kontakt;
+        }
+        cursor.close();
         db.close();
-
-        return k;
+        return kontakt;
     }
 
     public List<Kontakt> finnBursdag(){

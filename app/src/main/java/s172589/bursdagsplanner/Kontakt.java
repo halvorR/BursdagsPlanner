@@ -1,9 +1,11 @@
 package s172589.bursdagsplanner;
 
+import java.io.Serializable;
+
 /**
  * Created by Roger on 15.09.2015.
  */
-public class Kontakt {
+public class Kontakt implements Serializable {
     String navn;
     int tlf;
     String dato;

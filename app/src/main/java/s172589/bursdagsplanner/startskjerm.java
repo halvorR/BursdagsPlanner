@@ -1,6 +1,7 @@
 package s172589.bursdagsplanner;
 // Endret navn på Startskjerm.
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -17,14 +18,16 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Startskjerm extends AppCompatActivity {
+public class Startskjerm extends AppCompatActivity implements Serializable {
 
     ListView listViewDagens, listViewAlle;
     DBHandler db = new DBHandler(this);
     ArrayAdapter ListAdapter;
+    String tlf;
 
 
     public void mekkListe() {
@@ -75,7 +78,10 @@ public class Startskjerm extends AppCompatActivity {
         mekkListe();
         listViewDagens.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int pos, long id) {
-                String navn = listViewDagens.getItemAtPosition(pos).toString();
+                String navn = listViewAlle.getItemAtPosition(pos).toString();
+                tlf = navn.substring(navn.length() - 8);
+                Log.v("Telefontest","Telefonnummer på valgt er: " +tlf);
+                Log.v("Long click på posisjon "+pos,navn);
                 longClickMessage(navn);
                 return true;
             }
@@ -83,7 +89,7 @@ public class Startskjerm extends AppCompatActivity {
         listViewAlle.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int pos, long id) {
                 String navn = listViewAlle.getItemAtPosition(pos).toString();
-                String tlf = navn.substring(navn.length() - 8);
+                tlf = navn.substring(navn.length() - 8);
                 Log.v("Telefontest","Telefonnummer på valgt er: " +tlf);
                 Log.v("Long click på posisjon "+pos,navn);
                 longClickMessage(navn);
@@ -146,6 +152,9 @@ public class Startskjerm extends AppCompatActivity {
     }
     public void longClickMessage(String navn) {
         AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+        final int tlfParsed = Integer.parseInt(tlf);
+        final Kontakt k = db.finnKontakt(tlfParsed);
+        final Context c = getBaseContext();
         builder1.setMessage(navn);
         builder1.setCancelable(true);
         builder1.setPositiveButton("Avbryt",
@@ -157,13 +166,18 @@ public class Startskjerm extends AppCompatActivity {
         builder1.setNeutralButton("Edit",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+                        Intent i = new Intent(c, LeggTilNy.class);
+                        i.putExtra("Kontakt",(Serializable)k);
+                        startActivity(i);
                         dialog.cancel();
-
                     }
                 });
         builder1.setNegativeButton("Slett",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+                        db.slettKontakt(k);
+                        mekkListe();
+                        Toast.makeText(Startskjerm.this,k.getNavn()+" slettet.",Toast.LENGTH_LONG).show();
                         dialog.cancel();
                     }
                 });
