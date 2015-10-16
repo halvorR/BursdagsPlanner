@@ -40,12 +40,13 @@ public class Tidsvelger extends AppCompatActivity {
     public void lagreTid() throws FileNotFoundException {
         int timeValg = tidsvelger.getCurrentHour();
         int minuttValg = tidsvelger.getCurrentMinute();
-        Log.d("lagreTid() kalt:","Tiden er: " + timeValg +":"+ minuttValg);
+        String lagreTekst = Integer.toString(timeValg)+":"+Integer.toString(minuttValg);
 
         try {
             FileOutputStream fileout = openFileOutput(MY_FILE_NAME, Context.MODE_PRIVATE);
             OutputStreamWriter outputWriter=new OutputStreamWriter(fileout);
-            outputWriter.write("INN HER MÅ TIDEN LEGGES! PARSE STRING");
+            outputWriter.write(lagreTekst);
+            Log.d("lagreTid()", "Tiden er: " + timeValg + ":" + minuttValg + " og dette er skrevet til fil: " + lagreTekst);
             outputWriter.close();
 
         } catch (Exception e) {
