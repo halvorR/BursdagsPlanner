@@ -3,7 +3,6 @@ package s172589.bursdagsplanner;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.SmsManager;
 import android.util.Log;
-
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -18,11 +17,19 @@ public class Meldingsender extends AppCompatActivity {
     String melding;
     SmsManager smsMan = SmsManager.getDefault();
 
-    public Meldingsender(Kontakt kontakt) {
+    public boolean gratuler(Kontakt kontakt) {
         this.kontakt = kontakt;
         readFromFile();
+        Log.d("Meldingssender/gratuler", "Leser melding. Inputstream:\r\n"+melding);
+        if (kontakt==null || melding.equals("")) {
+            Log.d("Meldingssender/gratuler","Kontakt kontakt var null, eller så var meldingen tom.");
+            return false;
+        }
         smsMan.sendTextMessage(Integer.toString(kontakt.getTlf()),null,melding,null,null);
+        Log.d("Meldingssender/gratuler", "Melding ble sendt med suksess, til "+kontakt.getNavn());
+        return true;
     }
+
     private String readFromFile() {
         try {
             InputStream inputStream = openFileInput("melding.txt");

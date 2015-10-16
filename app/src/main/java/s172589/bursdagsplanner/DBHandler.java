@@ -21,11 +21,10 @@ import java.util.List;
 public class DBHandler extends SQLiteOpenHelper {
 
         static String TABLE_KONTAKTER="Kontakter";
-        static String KEY_ID="_ID";
         static String KEY_NAME= "Navn";
         static String KEY_PH_NO= "Telefon";
         static String KEY_DATE="Fodselsdato";
-        static int DATABASE_VERSION=1;
+        static int DATABASE_VERSION=2;
         static String DATABASE_NAME= "Telefonkontakter";
 
         public DBHandler(Context context) {
@@ -34,7 +33,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
         @Override
         public void onCreate(SQLiteDatabase db) {
-            String LAG_TABELL = "CREATE TABLE " + TABLE_KONTAKTER +"(" + KEY_ID + " INTEGER PRIMARY KEY," + KEY_PH_NO + " INTEGER,"
+            String LAG_TABELL = "CREATE TABLE " + TABLE_KONTAKTER +"(" + KEY_PH_NO + " INTEGER PRIMARY KEY,"
                     + KEY_NAME + " TEXT," + KEY_DATE + " TEXT" + ")";
             Log.d("SQL", LAG_TABELL);
             db.execSQL(LAG_TABELL);
@@ -65,10 +64,9 @@ public class DBHandler extends SQLiteOpenHelper {
             if	(cursor.moveToFirst())	{
                 do{
                     Kontakt	kontakt	= new Kontakt();
-                    kontakt.set_ID(Integer.parseInt(cursor.getString(0)));
-                    kontakt.setTlf(Integer.parseInt(cursor.getString(1)));
-                    kontakt.setNavn(cursor.getString(2));
-                    kontakt.setDato(cursor.getString(3));
+                    kontakt.setTlf(Integer.parseInt(cursor.getString(0)));
+                    kontakt.setNavn(cursor.getString(1));
+                    kontakt.setDato(cursor.getString(2));
                     kontaktListe.add(kontakt);
                 }
                 while (cursor.moveToNext());
@@ -83,28 +81,27 @@ public class DBHandler extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(KEY_NAME, k.getNavn());
         values.put(KEY_PH_NO, k.getTlf());
-        int endret = db.update(TABLE_KONTAKTER, values, KEY_ID + "= ?", new String[]{String.valueOf(k.get_ID())});
+        int endret = db.update(TABLE_KONTAKTER, values, KEY_PH_NO + "= ?", new String[]{String.valueOf(k.getTlf())});
         db.close();
         return endret;
     }
 
     public void slettKontakt(Kontakt k) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_KONTAKTER, KEY_ID + " =?", new String[]{String.valueOf(k.get_ID())});
+        db.delete(TABLE_KONTAKTER, KEY_PH_NO + " =?", new String[]{String.valueOf(k.getTlf())});
         db.close();
     }
 
 
     public Kontakt finnKontakt(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor c = db.query(TABLE_KONTAKTER, new String[]{
-                KEY_ID, KEY_NAME, KEY_PH_NO
-        }, KEY_ID + "=?", new String[]{
+        Cursor c = db.query(TABLE_KONTAKTER, new String[]{KEY_PH_NO, KEY_NAME},
+                KEY_PH_NO + "=?", new String[]{
                 String.valueOf(id)
         }, null, null, null, null);
         if(c != null)
             c.moveToFirst();
-        Kontakt k = new Kontakt(Integer.parseInt(c.getString(0)),c.getString(1), Integer.parseInt(c.getString(2)));
+        Kontakt k = new Kontakt(c.getString(0),c.getString(1), Integer.parseInt(c.getString(2)));
         c.close();
         db.close();
 

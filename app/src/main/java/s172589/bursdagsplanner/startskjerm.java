@@ -1,12 +1,18 @@
 package s172589.bursdagsplanner;
 // Endret navn på Startskjerm.
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -20,14 +26,21 @@ public class Startskjerm extends AppCompatActivity {
     DBHandler db = new DBHandler(this);
     ArrayAdapter ListAdapter;
 
+
     public void mekkListe() {
         listViewDagens = (ListView) findViewById(R.id.listeDagens);
         List<Kontakt> dagens = db.finnBursdag();
         if(dagens.size()>0) // check if list contains items.
         {
-            List<String> navnListe = new ArrayList<>();
+            List<Pair> parListe = new ArrayList<>();
+            int i;
             for (Kontakt k : dagens) {
-                navnListe.add(k.getNavn());
+                Pair p = new Pair<>(k.getNavn(),k.getTlf());
+                parListe.add(p);
+            }
+            List<String> navnListe = new ArrayList<>();
+            for (Pair p : parListe) {
+                navnListe.add(p.first.toString() + "\r\n" + p.second.toString());
             }
             ListAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, navnListe);
             listViewDagens.setAdapter(ListAdapter);
@@ -36,9 +49,15 @@ public class Startskjerm extends AppCompatActivity {
         List<Kontakt> alle = db.finnAlleKontakter();
         if(alle.size()>0) // check if list contains items.
         {
-            List<String> navnListe = new ArrayList<>();
+            List<Pair> parListe = new ArrayList<>();
+            int i;
             for (Kontakt k : alle) {
-                navnListe.add(k.getNavn());
+                Pair p = new Pair<>(k.getNavn(),k.getTlf());
+                parListe.add(p);
+            }
+            List<String> navnListe = new ArrayList<>();
+            for (Pair p : parListe) {
+                navnListe.add(p.first.toString() + "\r\n" + p.second.toString());
             }
             ListAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, navnListe);
             listViewAlle.setAdapter(ListAdapter);
@@ -54,6 +73,23 @@ public class Startskjerm extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_startskjerm);
         mekkListe();
+        listViewDagens.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int pos, long id) {
+                String navn = listViewDagens.getItemAtPosition(pos).toString();
+                longClickMessage(navn);
+                return true;
+            }
+        });
+        listViewAlle.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int pos, long id) {
+                String navn = listViewAlle.getItemAtPosition(pos).toString();
+                String tlf = navn.substring(navn.length() - 8);
+                Log.v("Telefontest","Telefonnummer på valgt er: " +tlf);
+                Log.v("Long click på posisjon "+pos,navn);
+                longClickMessage(navn);
+                return true;
+            }
+        });
     }
 
 
@@ -107,5 +143,32 @@ public class Startskjerm extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+    public void longClickMessage(String navn) {
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+        builder1.setMessage(navn);
+        builder1.setCancelable(true);
+        builder1.setPositiveButton("Avbryt",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        builder1.setNeutralButton("Edit",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+
+                    }
+                });
+        builder1.setNegativeButton("Slett",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
     }
 }
