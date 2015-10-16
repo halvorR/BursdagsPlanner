@@ -9,47 +9,61 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.util.List;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
 
 /**
  * Created by Halvor on 15.10.2015.
  */
 public class Meldingsvindu extends AppCompatActivity {
 
-    EditText meldingTekst;
-    Button lagreMeld;
+    private EditText meldingTekstFelt;
+    private Button lagreMeld;
+    private String MY_FILE_NAME = "melding.txt";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meldingsvindu);
 
+        meldingTekstFelt = (EditText) findViewById(R.id.meldingTekst);
         lagreMeld = (Button)findViewById(R.id.lagreMeldingKnapp);
+        lyttere();
+    }
+
+    public void leggTil() throws FileNotFoundException{
+        Context c = getApplicationContext();
+        int dur = Toast.LENGTH_SHORT;
+
+        Log.d("LEGGTIL","leggTil() kalt, meldinga er: " + meldingTekstFelt.getText().toString());
+
+        try {
+            FileOutputStream fileout = openFileOutput(MY_FILE_NAME, Context.MODE_PRIVATE);
+            OutputStreamWriter outputWriter=new OutputStreamWriter(fileout);
+            outputWriter.write(meldingTekstFelt.getText().toString());
+            outputWriter.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void lyttere() {
+
+        lagreMeld = (Button) findViewById(R.id.lagreMeldingKnapp);
+
         lagreMeld.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View v){
-                leggTil();
+                try {
+                    leggTil();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                finish();
             }
         });
-    }
-
-    public void leggTil(){
-        Context c = getApplicationContext();
-        int dur = Toast.LENGTH_SHORT;
-
-//
-//        DBHandler db = new DBHandler(this);
-//        db.leggTilKontakt(new Kontakt(datoFelt.getText().toString(),navnFelt.getText().toString(),telefonFeltInt));
-//
-//        List<Kontakt> kontakter = db.finnAlleKontakter();
-//        for (Kontakt k : kontakter) {
-//            String log = "\r\nLeggTilNy-klassen rapporterer at ny kontakt blir lagret, med data:" +
-//                    "\r\nId: "+ k.get_ID() + "\r\nNavn: " + k.getNavn() + "\r\nTelefonnr: " + k.getTlf() + "\r\nDato: " + k.getDato();
-//            Log.d("Navn: ", log);
-//        }
-//        Toast toast = Toast.makeText(c, navnFelt.getText().toString()+" lagret! Hurra!",dur);
-//        toast.show();
-//        this.finish();
     }
 }
