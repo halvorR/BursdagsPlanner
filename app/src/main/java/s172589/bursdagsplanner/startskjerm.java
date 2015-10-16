@@ -47,6 +47,8 @@ public class Startskjerm extends AppCompatActivity implements Serializable {
             }
             ListAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, navnListe);
             listViewDagens.setAdapter(ListAdapter);
+        } else {
+            listViewDagens.setAdapter(null);
         }
         listViewAlle = (ListView) findViewById(R.id.listeAlle);
         List<Kontakt> alle = db.finnAlleKontakter();
@@ -68,6 +70,7 @@ public class Startskjerm extends AppCompatActivity implements Serializable {
         else
         {
             Toast.makeText(Startskjerm.this,"Ingen kontakter å vise",Toast.LENGTH_LONG).show();
+            listViewAlle.setAdapter(null);
         }
     }
 

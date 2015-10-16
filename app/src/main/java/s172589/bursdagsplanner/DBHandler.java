@@ -114,7 +114,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
         for(Kontakt k : alleKontakter){
             try {
-                if(k.getDato().equals(dagensF)){
+                if(k.getDato().substring(0,5).equals(dagensF.substring(0,5))){
                     dagensBursdagsbarn.add(k);
                     Log.d("FINNK", dagensBursdagsbarn.toString());
                 }

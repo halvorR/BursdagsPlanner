@@ -37,7 +37,10 @@
         android:id="@+id/dato"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20dp"/>
+        android:textSize="20dp"
+        android:editable="false"
+        android:inputType="none"
+        android:clickable="true" />
 
     <Button
         android:id="@+id/lagreNy"

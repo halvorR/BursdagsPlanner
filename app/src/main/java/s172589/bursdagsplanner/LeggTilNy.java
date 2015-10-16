@@ -1,5 +1,6 @@
 package s172589.bursdagsplanner;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,10 +8,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -19,7 +22,7 @@ import java.util.List;
 public class LeggTilNy extends AppCompatActivity implements Serializable {
 
     private String navn, dato;
-    private int telefonNr;
+    private int telefonNr,year,month,day;
     private EditText navnFelt,telefonFelt,datoFelt;
     Kontakt k;
     DBHandler db = new DBHandler(this);
@@ -43,15 +46,53 @@ public class LeggTilNy extends AppCompatActivity implements Serializable {
         }
 
         Button lagreKnapp = (Button) findViewById(R.id.lagreNy);
-        lagreKnapp.setOnClickListener(new View.OnClickListener(){
+        lagreKnapp.setOnClickListener(new View.OnClickListener() {
 
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
                 leggTil();
+            }
+        });
+        datoFelt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar c = Calendar.getInstance();
+                String datoFeltTekst = datoFelt.getText().toString();
+                Log.v("datoFeltTekst",datoFeltTekst);
+                try {
+                    String[] split = datoFeltTekst.split("-");
+                    Log.v("Datotekst",datoFeltTekst);
+                    day = Integer.parseInt(split[0]);
+                    month = Integer.parseInt(split[1]);
+                    year = Integer.parseInt(split[2]);
+                    Log.v("Mine splits er","day "+day +", month "+month+", year "+ year);
+
+                } catch (Exception e) {
+                    year = 1990;
+                    month = c.get(Calendar.MONTH);
+                    day = c.get(Calendar.DAY_OF_MONTH);
+                }
+                DatePickerDialog dialog = new DatePickerDialog(LeggTilNy.this,
+                        new Datodialog(), year, month-1, day);
+                dialog.show();
             }
         });
     }
 
+    class Datodialog implements DatePickerDialog.OnDateSetListener {
+
+        @Override
+        public void onDateSet(DatePicker view, int year, int month,
+                              int day) {
+            int pickedYear = year;
+            int pickedMonth = month;
+            int pickedDay = day;
+            datoFelt.setText(new StringBuilder()
+                    .append(pickedDay).append("-").append(pickedMonth + 1).append("-")
+                    .append(pickedYear));
+            System.out.println(datoFelt.getText().toString());
+        }
+    }
 
     // Legg til person
     public void leggTil(){
