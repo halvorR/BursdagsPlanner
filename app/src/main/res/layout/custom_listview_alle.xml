@@ -33,4 +33,5 @@
         android:textSize="10dp"
         android:typeface="sans"
         android:singleLine="true"/>
+
 </LinearLayout>
