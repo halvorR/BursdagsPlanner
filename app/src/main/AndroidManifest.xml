@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="s172589.bursdagsplanner" >
+    package="s172589.bursdagsplanner"
+    android:installLocation="internalOnly">
 
     <uses-permission android:name= "android.permission.SEND_SMS"/>
     <uses-permission android:name = "android.permission.RECEIVE_BOOT_COMPLETED"/>
@@ -35,10 +36,13 @@
             android:parentActivityName=".Startskjerm">
         </activity>
 
-        <service android:name=".SjekkBursdag" />
-        <receiver android:name="BPBroadcastReceiver">
+        <service android:name="SjekkBursdag" />
+        <service android:name="Meldingsender"/>
+        <receiver android:name=".BPBroadcastReceiver">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="s172589.tidsvelger.meldingssender"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </receiver>
     </application>

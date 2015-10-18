@@ -1,13 +1,19 @@
 package s172589.bursdagsplanner;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -35,6 +41,16 @@ public class Tidsvelger extends AppCompatActivity {
         visRiktigTid();
         lyttere();
 
+        Switch s = (Switch) findViewById(R.id.velgAvPå);
+        s.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    startService();
+                } else {
+                    stoppService();
+                }
+            }
+        });
     }
 
     public void lagreTid() throws FileNotFoundException {
@@ -70,10 +86,10 @@ public class Tidsvelger extends AppCompatActivity {
         lagreKnapp = (Button) findViewById(R.id.lagreTid);
         avbrytKnapp = (Button) findViewById(R.id.avbrytTid);
 
-        lagreKnapp.setOnClickListener(new View.OnClickListener(){
+        lagreKnapp.setOnClickListener(new View.OnClickListener() {
 
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
                 try {
                     lagreTid();
                 } catch (FileNotFoundException e) {
@@ -82,13 +98,31 @@ public class Tidsvelger extends AppCompatActivity {
                 finish();
             }
         });
-        avbrytKnapp.setOnClickListener(new View.OnClickListener(){
+        avbrytKnapp.setOnClickListener(new View.OnClickListener() {
 
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
                 finish();
             }
         });
+    }
+
+    public void startService() {
+
+        Intent intent = new Intent();
+        intent.setAction("s172589.tidsvelger.meldingssender");
+        sendBroadcast(intent);
+    }
+
+    public void stoppService() { Intent i = new Intent(this, Meldingsender.class);
+        Toast.makeText(getApplicationContext(),"STOPPER MELDING", Toast.LENGTH_SHORT).show();
+        Log.d("STOPPMELD","Stopper meldingssending");
+
+
+        PendingIntent pintent = PendingIntent.getService(this, 0, i, 0);
+        AlarmManager alarm = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        alarm.cancel(pintent);
+
     }
 
 }

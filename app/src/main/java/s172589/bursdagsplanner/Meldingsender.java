@@ -1,8 +1,14 @@
 package s172589.bursdagsplanner;
 
+import android.app.Service;
+import android.content.Intent;
+import android.os.IBinder;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.SmsManager;
 import android.util.Log;
+import android.widget.Toast;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -12,11 +18,25 @@ import java.io.InputStreamReader;
 /**
  * Created by Roger on 16.10.2015.
  */
-public class Meldingsender extends AppCompatActivity {
+public class Meldingsender extends Service {
     Kontakt kontakt;
     String melding;
     SmsManager smsMan = SmsManager.getDefault();
 
+    @Override
+    public IBinder onBind(Intent arg0) { return null; }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+
+        test();
+        return super.onStartCommand(intent, flags, startId);
+    }
+
+    public void test() {
+        Toast.makeText(getApplicationContext(), "Sender melding", Toast.LENGTH_SHORT).show();
+        Log.d("MELDINGSENDER", "I meldingsender, sjekker hver gang jeg kjøres");
+    }
     public boolean gratuler(Kontakt kontakt) {
         this.kontakt = kontakt;
         readFromFile();

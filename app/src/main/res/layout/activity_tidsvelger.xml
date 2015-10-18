@@ -27,7 +27,7 @@
         android:layout_height="154dp"
         android:layout_gravity="center_horizontal"
         android:columnCount="3"
-        android:rowCount="3">
+        android:rowCount="4">
 
         <Button
             style="?android:attr/buttonStyleSmall"
@@ -46,6 +46,17 @@
             android:id="@+id/avbrytTid"
             android:layout_row="1"
             android:layout_column="2" />
+        <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sende melding"
+            android:id="@+id/velgAvPå"
+            android:layout_weight="0.18"
+            android:checked="true"
+            android:layout_row="3"
+            android:layout_column="1"
+            />
     </GridLayout>
+
 
 </LinearLayout>

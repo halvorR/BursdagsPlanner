@@ -25,22 +25,12 @@ public class SjekkBursdag extends Service {
         Toast.makeText(getApplicationContext(), "SJEKKER BURSDAG", Toast.LENGTH_SHORT).show();
         Log.d("SJEKKBURS", "I SjekkBursdag");
 
-        Calendar c = Calendar.getInstance();
+        Calendar cal = Calendar.getInstance();
+        Intent i = new Intent(this, Meldingsender.class);
 
-        // HENTE INN TIDSPUNKT FRA FIL
-
-        Intent i =  new Intent(this, Meldingsender.class);
-        PendingIntent pI = PendingIntent.getActivity(this, 0, i, 0);
+        PendingIntent pintent = PendingIntent.getService(this, 0, i, 0);
         AlarmManager alarm = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        alarm.setRepeating(AlarmManager.RTC_WAKEUP,c.getTimeInMillis(), 10 * 1000, pI);
-
-
-
-        // Sjekker dato i DB mot dagens dato
-
-        // Finnes det noen, send Intent til Meldingssender
-
-
+        alarm.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), 10 * 1000, pintent);
         return super.onStartCommand(intent, flags, startId);
     }
 
