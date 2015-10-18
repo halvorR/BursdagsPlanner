@@ -70,6 +70,7 @@ public class LeggTilNy extends AppCompatActivity implements Serializable {
                 } catch (Exception e) {
                     year = 1990;
                     month = c.get(Calendar.MONTH);
+                    month++;
                     day = c.get(Calendar.DAY_OF_MONTH);
                 }
                 DatePickerDialog dialog = new DatePickerDialog(LeggTilNy.this,

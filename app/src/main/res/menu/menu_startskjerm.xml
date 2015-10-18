@@ -4,12 +4,10 @@
 
     <!-- Bruk 36dpi fra xhdpi-mappa, funker best-->
 
-    <item android:id="@+id/melding" android:icon="@drawable/ic_message_white_36dp" android:title="Melding"
-        android:orderInCategory="1" app:showAsAction="ifRoom" />
     <item android:id="@+id/lag_ny" android:icon="@drawable/ic_add_white_24dp" android:title="Legg til"
-        android:orderInCategory="2" app:showAsAction="ifRoom" />
-    <item android:id="@+id/settings" android:icon="@drawable/ic_settings_white_48dp" android:title="Innstillinger"
-        android:orderInCategory="4" app:showAsAction="ifRoom" />
-    <item android:id="@+id/endreTid" android:icon="@drawable/ic_access_time_white_36dp" android:title="Endre tid"
         android:orderInCategory="3" app:showAsAction="ifRoom" />
+    <item android:id="@+id/melding" android:icon="@drawable/ic_message_white_36dp" android:title="Melding"
+        android:orderInCategory="2" app:showAsAction="ifRoom" />
+    <item android:id="@+id/endreTid" android:icon="@drawable/ic_access_time_white_36dp" android:title="Tidspunkt for utsendelse"
+        android:orderInCategory="1" app:showAsAction="ifRoom" />
 </menu>

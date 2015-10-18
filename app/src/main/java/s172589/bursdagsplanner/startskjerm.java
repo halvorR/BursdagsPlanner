@@ -6,6 +6,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +18,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.Serializable;
@@ -29,23 +32,12 @@ public class Startskjerm extends AppCompatActivity implements Serializable {
     ArrayAdapter ListAdapter;
     String tlf;
 
-
     public void mekkListe() {
         listViewDagens = (ListView) findViewById(R.id.listeDagens);
         List<Kontakt> dagens = db.finnBursdag();
         if(dagens.size()>0) // check if list contains items.
         {
-            List<Pair> parListe = new ArrayList<>();
-            int i;
-            for (Kontakt k : dagens) {
-                Pair p = new Pair<>(k.getNavn(),k.getTlf());
-                parListe.add(p);
-            }
-            List<String> navnListe = new ArrayList<>();
-            for (Pair p : parListe) {
-                navnListe.add(p.first.toString() + "\r\n" + p.second.toString());
-            }
-            ListAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, navnListe);
+            ListAdapter = new CustomAdapter(this,dagens,R.layout.custom_listview_dagens);
             listViewDagens.setAdapter(ListAdapter);
         } else {
             listViewDagens.setAdapter(null);
@@ -54,17 +46,7 @@ public class Startskjerm extends AppCompatActivity implements Serializable {
         List<Kontakt> alle = db.finnAlleKontakter();
         if(alle.size()>0) // check if list contains items.
         {
-            List<Pair> parListe = new ArrayList<>();
-            int i;
-            for (Kontakt k : alle) {
-                Pair p = new Pair<>(k.getNavn(),k.getTlf());
-                parListe.add(p);
-            }
-            List<String> navnListe = new ArrayList<>();
-            for (Pair p : parListe) {
-                navnListe.add(p.first.toString() + "\r\n" + p.second.toString());
-            }
-            ListAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, navnListe);
+            ListAdapter = new CustomAdapter(this,alle,R.layout.custom_listview_alle);
             listViewAlle.setAdapter(ListAdapter);
         }
         else
@@ -81,26 +63,21 @@ public class Startskjerm extends AppCompatActivity implements Serializable {
         mekkListe();
         listViewDagens.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int pos, long id) {
-                String navn = listViewAlle.getItemAtPosition(pos).toString();
-                tlf = navn.substring(navn.length() - 8);
-                Log.v("Telefontest","Telefonnummer på valgt er: " +tlf);
-                Log.v("Long click på posisjon "+pos,navn);
-                longClickMessage(navn);
+                Kontakt k = (Kontakt) listViewAlle.getItemAtPosition(pos);
+                tlf = Integer.toString(k.getTlf());
+                longClickMessage(k.getNavn()+"\r\n"+tlf+"\r\n"+k.getDato());
                 return true;
             }
         });
         listViewAlle.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int pos, long id) {
-                String navn = listViewAlle.getItemAtPosition(pos).toString();
-                tlf = navn.substring(navn.length() - 8);
-                Log.v("Telefontest","Telefonnummer på valgt er: " +tlf);
-                Log.v("Long click på posisjon "+pos,navn);
-                longClickMessage(navn);
+                Kontakt k = (Kontakt) listViewAlle.getItemAtPosition(pos);
+                tlf = Integer.toString(k.getTlf());
+                longClickMessage(k.getNavn()+"\r\n"+tlf+"\r\n"+k.getDato());
                 return true;
             }
         });
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -117,20 +94,13 @@ public class Startskjerm extends AppCompatActivity implements Serializable {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         Context c = getApplicationContext();
         int dur = Toast.LENGTH_SHORT;
 
         switch(id) {
-            case R.id.settings:
-                Toast toast = Toast.makeText(c,"Settings klikket",dur);
-                toast.show();
-                return true;
             case R.id.lag_ny:
-                toast = Toast.makeText(c,"Lag ny klikket",dur);
+                Toast toast = Toast.makeText(c,"Lag ny klikket",dur);
                 toast.show();
 
                 Intent i = new Intent(this, LeggTilNy.class);
