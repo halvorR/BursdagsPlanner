@@ -3,6 +3,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#e2ccd675"
+    android:padding="15dp"
     android:weightSum="1">
 
 
@@ -10,18 +12,50 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Her kan du skrive en hyggelig bursdagsmelding til alle du velger  legge inn!"
+        android:text="Melding som sendes når en kontakt har bursdag:"
         android:id="@+id/meldingsInfo"
+        android:textColor="#666"
         android:layout_weight="0.10" />
 
     <EditText
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:background="#edfd9f"
+        android:layout_height="250dp"
         android:id="@+id/meldingTekst" />
 
-    <Button
-        android:layout_width="match_parent"
+    <GridLayout
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:text="Lagre melding"
-        android:id="@+id/lagreMeldingKnapp" />
+        android:layout_gravity="center_horizontal"
+        android:columnCount="2"
+        android:rowCount="3"
+        android:layout_weight="0.8">
+
+        <ImageButton
+            style="?android:attr/buttonStyleSmall"
+            android:src="@drawable/ic_check_circle_grey_36dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="lagreMeld"
+            android:id="@+id/lagreMeld"
+            android:layout_row="2"
+            android:layout_column="1"
+            android:background="#0000"
+            android:contentDescription="Aksepter valg"
+            android:layout_gravity="center_horizontal|right" />
+
+        <ImageButton
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:src="@drawable/ic_cancel_grey_36dp"
+            android:layout_height="wrap_content"
+            android:text="avbrytMeld"
+            android:id="@+id/avbrytMeld"
+            android:layout_row="2"
+            android:layout_column="0"
+            android:background="#0000"
+            android:contentDescription="Avbryt valg"
+            android:layout_gravity="left|center_horizontal" />
+    </GridLayout>
+
 </LinearLayout>

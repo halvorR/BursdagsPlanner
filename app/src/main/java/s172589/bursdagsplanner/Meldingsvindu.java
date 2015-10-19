@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import java.io.FileNotFoundException;
@@ -19,7 +20,7 @@ import java.io.OutputStreamWriter;
 public class Meldingsvindu extends AppCompatActivity {
 
     private EditText meldingTekstFelt;
-    private Button lagreMeld;
+    private ImageButton lagreMeld,avbrytMeld;
     private String MY_FILE_NAME = "melding.txt";
 
     @Override
@@ -28,7 +29,8 @@ public class Meldingsvindu extends AppCompatActivity {
         setContentView(R.layout.activity_meldingsvindu);
 
         meldingTekstFelt = (EditText) findViewById(R.id.meldingTekst);
-        lagreMeld = (Button)findViewById(R.id.lagreMeldingKnapp);
+        lagreMeld = (ImageButton)findViewById(R.id.lagreMeld);
+        avbrytMeld = (ImageButton)findViewById(R.id.avbrytMeld);
         lyttere();
     }
 
@@ -51,7 +53,8 @@ public class Meldingsvindu extends AppCompatActivity {
 
     public void lyttere() {
 
-        lagreMeld = (Button) findViewById(R.id.lagreMeldingKnapp);
+        lagreMeld = (ImageButton) findViewById(R.id.lagreMeld);
+        avbrytMeld = (ImageButton) findViewById(R.id.avbrytMeld);
 
         lagreMeld.setOnClickListener(new View.OnClickListener(){
 
@@ -62,6 +65,13 @@ public class Meldingsvindu extends AppCompatActivity {
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
+                finish();
+            }
+        });
+        avbrytMeld.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
                 finish();
             }
         });

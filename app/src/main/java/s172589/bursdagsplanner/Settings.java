@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.Switch;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -25,10 +26,10 @@ import java.util.Calendar;
 /**
  * Created by Halvor on 13.10.2015.
  */
-public class Tidsvelger extends AppCompatActivity {
+public class Settings extends AppCompatActivity {
 
     private TimePicker tidsvelger;
-    private Button lagreKnapp,avbrytKnapp;
+    private ImageButton lagreKnapp,avbrytKnapp;
     private int time;
     private int minutt;
     String MY_FILE_NAME = "tid";
@@ -101,8 +102,8 @@ public class Tidsvelger extends AppCompatActivity {
     }
     public void lyttere() {
 
-        lagreKnapp = (Button) findViewById(R.id.lagreTid);
-        avbrytKnapp = (Button) findViewById(R.id.avbrytTid);
+        lagreKnapp = (ImageButton) findViewById(R.id.lagreTid);
+        avbrytKnapp = (ImageButton) findViewById(R.id.avbrytTid);
 
         lagreKnapp.setOnClickListener(new View.OnClickListener() {
 

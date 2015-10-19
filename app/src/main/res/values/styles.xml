@@ -2,7 +2,8 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+        android:background="#e2ccd675"
+        android:overScrollMode="never"
     </style>
 
 </resources>
