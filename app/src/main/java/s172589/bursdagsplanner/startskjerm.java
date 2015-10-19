@@ -158,4 +158,5 @@ public class Startskjerm extends AppCompatActivity implements Serializable {
         AlertDialog alert11 = builder1.create();
         alert11.show();
     }
+
 }

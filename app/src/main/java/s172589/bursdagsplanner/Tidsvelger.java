@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -42,15 +43,32 @@ public class Tidsvelger extends AppCompatActivity {
         lyttere();
 
         Switch s = (Switch) findViewById(R.id.velgAvPå);
+
+        SharedPreferences shared = getSharedPreferences("MeldingAvPå",MODE_PRIVATE);
+        s.setChecked(shared.getBoolean("meldAvPå",true));
+
         s.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
+                    SharedPreferences.Editor editor = getSharedPreferences("MeldingAvPå", MODE_PRIVATE).edit();
+                    editor.putBoolean("meldAvPå", true);
+                    editor.commit();
+
+                    Toast.makeText(getApplicationContext(),"SWITCH PÅ", Toast.LENGTH_SHORT).show();
+                    Log.d("SWITCH", "Jeg har blitt satt som på");
                     startService();
                 } else {
+                    SharedPreferences.Editor editor = getSharedPreferences("MeldingAvPå", MODE_PRIVATE).edit();
+                    editor.putBoolean("meldAvPå", false);
+                    editor.commit();
+
+                    Toast.makeText(getApplicationContext(),"SWITCH AV", Toast.LENGTH_SHORT).show();
+                    Log.d("SWITCH", "Jeg har blitt satt som av");
                     stoppService();
                 }
             }
         });
+
     }
 
     public void lagreTid() throws FileNotFoundException {
@@ -62,7 +80,7 @@ public class Tidsvelger extends AppCompatActivity {
             FileOutputStream fileout = openFileOutput(MY_FILE_NAME, Context.MODE_PRIVATE);
             OutputStreamWriter outputWriter=new OutputStreamWriter(fileout);
             outputWriter.write(lagreTekst);
-            Log.d("lagreTid()", "Tiden er: " + timeValg + ":" + minuttValg + " og dette er skrevet til fil: " + lagreTekst);
+            Log.d("lagreTid()", "Tiden er: " + timeValg + ":" + minuttValg + " og dette er skrevet til filen " + MY_FILE_NAME + ": " + lagreTekst);
             outputWriter.close();
 
         } catch (Exception e) {
@@ -92,10 +110,11 @@ public class Tidsvelger extends AppCompatActivity {
             public void onClick(View v) {
                 try {
                     lagreTid();
+                    startService();
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
-                finish();
+                Toast.makeText(getApplicationContext(),"Ny tid for utsendelse lagret", Toast.LENGTH_SHORT).show();
             }
         });
         avbrytKnapp.setOnClickListener(new View.OnClickListener() {
@@ -123,6 +142,16 @@ public class Tidsvelger extends AppCompatActivity {
         AlarmManager alarm = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         alarm.cancel(pintent);
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
     }
 
 }

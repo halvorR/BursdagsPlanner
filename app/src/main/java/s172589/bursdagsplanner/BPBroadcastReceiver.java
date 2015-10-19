@@ -14,11 +14,19 @@ import android.widget.Toast;
 public class BPBroadcastReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        Toast.makeText(context, "I BroadcastReceiver etter boot", Toast.LENGTH_SHORT).show();
-        Log.d("BOOT", "I BroadcastReceiver etter boot");
+        if(intent.getAction().equals("android.intent.action.BOOT_COMPLETED")){
+            Toast.makeText(context, "I BroadcastReceiver etter boot", Toast.LENGTH_SHORT).show();
+            Log.d("BOOT", "I BroadcastReceiver etter boot");
 
-        Intent intEmt = new Intent(context, SjekkBursdag.class);
-        context.startService(intEmt);
+            Intent intEmt = new Intent(context, SjekkBursdag.class);
+            context.startService(intEmt);
+        } else {
+            Toast.makeText(context, "I BroadcastReceiver etter switch", Toast.LENGTH_SHORT).show();
+            Log.d("BOOT", "I BroadcastReceiver etter switch");
+
+            Intent intEmt = new Intent(context, SjekkBursdag.class);
+            context.startService(intEmt);
+        }
 
     }
 }

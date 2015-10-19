@@ -14,11 +14,16 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Roger on 16.10.2015.
  */
-public class Meldingsender extends Service {
+public class Meldingsender extends Service implements Serializable {
+    private List<Kontakt> dagens;
+    DBHandler db = new DBHandler(this);
     Kontakt kontakt;
     String melding;
     SmsManager smsMan = SmsManager.getDefault();
@@ -28,8 +33,8 @@ public class Meldingsender extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
-        test();
+        sendMeld();
+//        test();
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -45,7 +50,7 @@ public class Meldingsender extends Service {
             Log.d("Meldingssender/gratuler","Kontakt kontakt var null, eller så var meldingen tom.");
             return false;
         }
-        smsMan.sendTextMessage(Integer.toString(kontakt.getTlf()),null,melding,null,null);
+        smsMan.sendTextMessage(Integer.toString(kontakt.getTlf()), null, melding, null, null);
         Log.d("Meldingssender/gratuler", "Melding ble sendt med suksess, til "+kontakt.getNavn());
         return true;
     }
@@ -54,26 +59,37 @@ public class Meldingsender extends Service {
         try {
             InputStream inputStream = openFileInput("melding.txt");
 
-            if ( inputStream != null ) {
+            if (inputStream != null) {
                 InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
                 BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
                 String receiveString = "";
                 StringBuilder stringBuilder = new StringBuilder();
 
-                while ( (receiveString = bufferedReader.readLine()) != null ) {
+                while ((receiveString = bufferedReader.readLine()) != null) {
                     stringBuilder.append(receiveString);
                 }
 
                 inputStream.close();
                 melding = stringBuilder.toString();
             }
-        }
-        catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             Log.e("login activity", "File not found: " + e.toString());
         } catch (IOException e) {
             Log.e("login activity", "Can not read file: " + e.toString());
         }
 
         return melding;
+    }
+
+    public void sendMeld() {
+        dagens = db.finnBursdag();
+        if(dagens != null){
+            for(Kontakt k : dagens) {
+                Log.d("SENDMELD()", "HER er kontaktene:" + k.getNavn());
+                gratuler(k);
+            }
+        } else {
+                Log.d("SENDMELD()", "Ingen kontakter har bursdag idag");
+        }
     }
 }
