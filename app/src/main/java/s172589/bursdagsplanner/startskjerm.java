@@ -40,7 +40,10 @@ public class Startskjerm extends AppCompatActivity implements Serializable {
             ListAdapter = new CustomAdapter(this,dagens,R.layout.custom_listview_dagens);
             listViewDagens.setAdapter(ListAdapter);
         } else {
-            listViewDagens.setAdapter(null);
+            Kontakt k = new Kontakt("","Ingen bursdagsbarn",0);
+            dagens.add(k);
+            ListAdapter = new CustomAdapter(this,dagens,R.layout.custom_listview_dagens);
+            listViewDagens.setAdapter(ListAdapter);
         }
         listViewAlle = (ListView) findViewById(R.id.listeAlle);
         List<Kontakt> alle = db.finnAlleKontakter();

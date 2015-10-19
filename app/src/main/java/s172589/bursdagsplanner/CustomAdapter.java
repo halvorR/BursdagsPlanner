@@ -29,7 +29,9 @@ public class CustomAdapter extends ArrayAdapter<Kontakt> {
         TextView telefonFelt = (TextView) convertView.findViewById(R.id.telefonFelt);
         TextView datoFelt = (TextView) convertView.findViewById(R.id.datoFelt);
 
+        if (k.getTlf()>0)
         telefonFelt.setText(Integer.toString(k.getTlf()));
+
         navneFelt.setText(k.getNavn());
         datoFelt.setText(k.getDato());
 
