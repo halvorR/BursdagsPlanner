@@ -112,6 +112,7 @@ public class Settings extends AppCompatActivity {
                 try {
                     lagreTid();
                     startService();
+                    finish();
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }

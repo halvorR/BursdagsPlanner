@@ -57,6 +57,8 @@ public class Startskjerm extends AppCompatActivity implements Serializable {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_startskjerm);
+        getSupportActionBar().setTitle("");
+        getSupportActionBar().setIcon(R.drawable.crown);
         mekkListe();
         listViewAlle.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int pos, long id) {
