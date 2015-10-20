@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -20,16 +20,18 @@
         android:background="#edfd9f"
         android:divider="#b3bc68"
         android:dividerHeight="4dp"
-        android:overScrollMode="never" />
+        android:overScrollMode="never"
+        android:layout_alignParentTop="true" />
 
     <!--Nederste listview for å se alle kontakter som er lagret i appen-->
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/listeAlle"
+        android:layout_below="@+id/listeDagens"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="15dp"
         android:background="#edfd9f"
         android:divider="#b3bc68"
-        android:dividerHeight="4dp" />
-</LinearLayout>
+        android:dividerHeight="4dp"/>
+</RelativeLayout>
