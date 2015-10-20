@@ -79,7 +79,8 @@ public class SjekkBursdag extends Service {
         } catch (IOException e) {
             Log.e("login activity", "Can not read file: " + e.toString());
         }
-
+        if (tid=="")
+            tid="0:0";
         return tid;
     }
 
