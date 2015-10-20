@@ -44,10 +44,12 @@ public class SjekkBursdag extends Service {
 
         cal_ny.set(Calendar.HOUR_OF_DAY, tidspunkt[0]);
         cal_ny.set(Calendar.MINUTE, tidspunkt[1]);
-        cal_ny.set(Calendar.SECOND,0);
+        cal_ny.set(Calendar.SECOND, 0);
 
         Log.d("CAL etter ", "Endret: " + cal_ny.getTime()+ " | Millisek: " +cal_ny.getTimeInMillis());
 
+        long te = cal.getTimeInMillis() - cal_ny.getTimeInMillis();
+        Log.v("DIFF", "Differansen er " +te);
         Intent i = new Intent(this, Meldingsender.class);
 
         PendingIntent pintent = PendingIntent.getService(this, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);

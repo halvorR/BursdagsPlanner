@@ -110,13 +110,13 @@ public class DBHandler extends SQLiteOpenHelper {
         format.setCalendar(dagens);
 
         String dagensF = format.format(dagens.getTime());
-        Log.d("FINNB", dagensF);
+        Log.v("FINNBURSDAG", "Dagens bursdagsdato" + dagensF);
 
         for(Kontakt k : alleKontakter){
             try {
                 if(k.getDato().substring(0,5).equals(dagensF.substring(0,5))){
                     dagensBursdagsbarn.add(k);
-                    Log.d("FINNK", dagensBursdagsbarn.toString());
+                    Log.d("FINNBURSDAG", "Dagens bursdagsbarn: " + dagensBursdagsbarn.toString());
                 }
             } catch (Exception e) {
                 e.printStackTrace();
