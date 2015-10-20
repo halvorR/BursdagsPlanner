@@ -5,15 +5,26 @@
 
     <uses-permission android:name= "android.permission.SEND_SMS"/>
     <uses-permission android:name = "android.permission.RECEIVE_BOOT_COMPLETED"/>
-    <uses-permission android:name="s172589.bursdagsplanner.customprovider.permission"/>
+    <uses-permission android:name="s172589.bursdagsplanner.customcontent.permission"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <permission android:name="s172589.bursdagsplanner.customprovider.permission"/>
 
 
     <application
+
+
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label=""
         android:theme="@style/Theme.AppCompat.Light.DarkActionBar" >
+        <provider
+            android:authorities="s172589.bursdagsplanner"
+            android:name="s172589.bursdagsplanner.CustomProvider"
+            android:enabled="true"
+            android:exported="true"
+            android:readPermission="s172589.bursdagsplanner.permisson"
+            android:writePermission="s172589.bursdagsplanner.permisson"
+            />
         <activity
             android:name=".Startskjerm"
             android:label="" >
