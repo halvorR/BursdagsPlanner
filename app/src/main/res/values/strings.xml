@@ -1,9 +1,25 @@
 <resources>
-    <string name="app_name">BursdagsPlanner</string>
-    <string name="leggTil">Legg til</string>
-    <string name="melding">Skriv melding</string>
-    <string name="tidsvelger">Instillinger</string>
+    <!--Meny-->
+    <string name="leggTilKnapp">Legg til</string>
+    <string name="Meldingsknapp">Endre melding</string>
+    <string name="Settings">Settings</string>
 
-    <string name="hello_world">Oversikt over kontakter!</string>
-    <string name="action_settings">Settings</string>
+    <!--LeggTilNy-->
+    <string name="Navn">Navn:</string>
+    <string name="tlf">Telefon:</string>
+    <string name="bursdag">Fødselsdag:</string>
+    <string name="akseptDesc">Aksepter valg</string>
+    <string name="avbrytDesc">Avbryt valg</string>
+
+    <!--Meldingsvindu-->
+    <string name="meldInfo">Melding som sendes når en kontakt har bursdag:</string>
+
+    <!--Tidsvelger-->
+    <string name="timestamp">tidspunkt for gratulasjon</string>
+    <string name="autoMeld">Automatisk melding</string>
+    <string name="IngenBurs">Ingen bursdagsbarn</string>
+    <string name="tidsvelger"> </string>
+    <string name="melding"> </string>
+    <string name="leggTil"> </string>
+
 </resources>

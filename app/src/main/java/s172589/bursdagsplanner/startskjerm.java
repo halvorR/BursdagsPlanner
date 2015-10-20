@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -33,7 +34,7 @@ public class Startskjerm extends AppCompatActivity implements Serializable {
             ListAdapter = new CustomAdapter(this,dagens,R.layout.custom_listview_dagens);
             listViewDagens.setAdapter(ListAdapter);
         } else {
-            Kontakt k = new Kontakt("","Ingen bursdagsbarn",0);
+            Kontakt k = new Kontakt("",getString(R.string.IngenBurs),0);
             dagens.add(k);
             ListAdapter = new CustomAdapter(this,dagens,R.layout.custom_listview_dagens);
             listViewDagens.setAdapter(ListAdapter);
@@ -57,14 +58,6 @@ public class Startskjerm extends AppCompatActivity implements Serializable {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_startskjerm);
         mekkListe();
-        listViewDagens.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int pos, long id) {
-                Kontakt k = (Kontakt) listViewAlle.getItemAtPosition(pos);
-                tlf = Integer.toString(k.getTlf());
-                longClickMessage(k.getNavn()+"\r\n"+tlf+"\r\n"+k.getDato());
-                return true;
-            }
-        });
         listViewAlle.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int pos, long id) {
                 Kontakt k = (Kontakt) listViewAlle.getItemAtPosition(pos);
@@ -103,7 +96,7 @@ public class Startskjerm extends AppCompatActivity implements Serializable {
                 startActivity(i);
 
                 return true;
-            case R.id.endreTid:
+            case R.id.settings:
                 toast = Toast.makeText(c,"endreTid klikket",dur);
                 toast.show();
 
@@ -136,7 +129,7 @@ public class Startskjerm extends AppCompatActivity implements Serializable {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         Intent i = new Intent(c, LeggTilNy.class);
-                        i.putExtra("Kontakt",(Serializable)k);
+                        i.putExtra("Kontakt", (Serializable) k);
                         startActivity(i);
                         dialog.cancel();
                     }
@@ -146,13 +139,27 @@ public class Startskjerm extends AppCompatActivity implements Serializable {
                     public void onClick(DialogInterface dialog, int id) {
                         db.slettKontakt(k);
                         mekkListe();
-                        Toast.makeText(Startskjerm.this,k.getNavn()+" slettet.",Toast.LENGTH_LONG).show();
+                        Toast.makeText(Startskjerm.this, k.getNavn() + " slettet.", Toast.LENGTH_LONG).show();
                         dialog.cancel();
                     }
                 });
 
-        AlertDialog alert11 = builder1.create();
-        alert11.show();
+        AlertDialog aDialog = builder1.create();
+        aDialog.show();
+
+        // avbryt
+        Button avbrytIcon = aDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+        // edit
+        Button editIcon = aDialog.getButton(AlertDialog.BUTTON_NEUTRAL);
+        // slett
+        Button slettIcon = aDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+
+        avbrytIcon.setCompoundDrawablesWithIntrinsicBounds(null, null, null,this.getResources().getDrawable(R.drawable.ic_cancel_black_18dp));
+        avbrytIcon.setText("");
+        editIcon.setCompoundDrawablesWithIntrinsicBounds(null, null, null, this.getResources().getDrawable(R.drawable.ic_mode_edit_black_18dp));
+        editIcon.setText("");
+        slettIcon.setCompoundDrawablesWithIntrinsicBounds(null, null, null, this.getResources().getDrawable(R.drawable.ic_delete_black_18dp));
+        slettIcon.setText("");
     }
 
 }
