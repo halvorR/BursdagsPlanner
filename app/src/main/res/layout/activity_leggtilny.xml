@@ -69,6 +69,22 @@
             android:contentDescription="@string/akseptDesc"
             android:layout_gravity="center_horizontal|right" />
 
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cptest"
+            android:id="@+id/cptest"
+            android:layout_row="0"
+            android:layout_column="0"
+            android:layout_columnWeight="1"
+            android:layout_columnSpan="2"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="15dp"
+            android:background="#7e8bff"
+            android:textColor="#ffffff"
+            android:padding="6dp" />
+
         <ImageButton
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"

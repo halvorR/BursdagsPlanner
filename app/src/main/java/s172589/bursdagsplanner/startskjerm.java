@@ -1,12 +1,18 @@
 package s172589.bursdagsplanner;
 // Endret navn på Startskjerm.
 
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteConstraintException;
+import android.database.sqlite.SQLiteDatabase;
+import android.renderscript.Element;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -64,10 +70,46 @@ public class Startskjerm extends AppCompatActivity implements Serializable {
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int pos, long id) {
                 Kontakt k = (Kontakt) listViewAlle.getItemAtPosition(pos);
                 tlf = Integer.toString(k.getTlf());
-                longClickMessage(k.getNavn()+"\r\n"+tlf+"\r\n"+k.getDato());
+                longClickMessage(k.getNavn() + "\r\n" + tlf + "\r\n" + k.getDato());
                 return true;
             }
         });
+
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.v("RESULTAT","kom meg inn i resultatgreia");
+        if(requestCode == 1 && resultCode == Activity.RESULT_OK) {
+            Kontakt cpK = (Kontakt)data.getSerializableExtra("Kontakt");
+            Log.v("RESULTAT", "Tok med meg noe! Specifically " + cpK.getNavn());
+            if (cpK != null) {
+                CustomProvider cp = new CustomProvider();
+                ContentValues v = new ContentValues();
+                Kontakt cpK_kopi = db.finnKontakt(cpK.getTlf());
+                Log.v("RESULTAT", "("+cpK.getNavn() + " " + cpK.getTlf() + ") er lik som (" + cpK_kopi.getNavn() + " " + cpK_kopi.getTlf() + ")");
+                if (cpK_kopi.getNavn() == null) {
+                    v.put(db.KEY_NAME, cpK.getNavn());
+                    v.put(db.KEY_DATE, cpK.getDato());
+                    v.put(db.KEY_PH_NO, cpK.getTlf());
+                } else {
+                    Kontakt errorMan = new Kontakt(cpK_kopi.getDato(),cpK_kopi.getNavn(),cpK_kopi.getTlf());
+                    int tlf = cpK_kopi.getTlf();
+                    while (cpK_kopi.getNavn() != null) {
+                        tlf++;
+                        cpK_kopi.setTlf(tlf);
+                        errorMan.setTlf(tlf);
+                        cpK_kopi= db.finnKontakt(cpK_kopi.getTlf());
+                    }
+                    v.put(db.KEY_NAME, errorMan.getNavn());
+                    v.put(db.KEY_DATE, errorMan.getDato());
+                    v.put(db.KEY_PH_NO, errorMan.getTlf());
+                }
+                Log.v("Startskjerm CP", "" + v + cp.CONTENT_URI);
+                getApplicationContext().getContentResolver().insert(cp.CONTENT_URI, v);
+            } else
+                Log.v("OnActivityResult","Resultatkontakt var null");
+        }
     }
 
     @Override
@@ -95,7 +137,7 @@ public class Startskjerm extends AppCompatActivity implements Serializable {
                 toast.show();
 
                 Intent i = new Intent(this, LeggTilNy.class);
-                startActivity(i);
+                startActivityForResult(i,1);
 
                 return true;
             case R.id.settings:

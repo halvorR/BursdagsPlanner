@@ -1,6 +1,8 @@
 package s172589.bursdagsplanner;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.ContentProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -37,17 +39,22 @@ public class LeggTilNy extends AppCompatActivity implements Serializable {
         telefonFelt = (EditText)findViewById(R.id.telefon);
         datoFelt = (EditText)findViewById(R.id.dato);
 
-        Intent i = getIntent();
-        k = (Kontakt)i.getSerializableExtra("Kontakt");
-        if (k!=null) {
-            Log.v("LeggTilNy", "Det ble sendt en kontakt med når vi gikk til LeggTilNy");
-            navnFelt.setText(k.getNavn());
-            telefonFelt.setText(Integer.toString(k.getTlf()));
-            datoFelt.setText(k.getDato());
-        }
-
         ImageButton lagreKnapp = (ImageButton) findViewById(R.id.lagreK);
         ImageButton avbrytKnapp = (ImageButton) findViewById(R.id.avbrytK);
+        Button cptest = (Button) findViewById(R.id.cptest);
+        final Context c = getBaseContext();
+
+        cptest.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                Kontakt cp = new Kontakt("01-01-2001","Fra CustomProvider",12121212);
+                intent.putExtra("Kontakt", (Serializable) cp);
+                setResult(Activity.RESULT_OK, intent);
+                finish();
+            }
+        });
         lagreKnapp.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -87,6 +94,15 @@ public class LeggTilNy extends AppCompatActivity implements Serializable {
                 dialog.show();
             }
         });
+        Intent i = getIntent();
+        k = (Kontakt)i.getSerializableExtra("Kontakt");
+        if (k!=null) {
+            cptest.setVisibility(View.GONE);
+            Log.v("LeggTilNy", "Det ble sendt en kontakt med når vi gikk til LeggTilNy");
+            navnFelt.setText(k.getNavn());
+            telefonFelt.setText(Integer.toString(k.getTlf()));
+            datoFelt.setText(k.getDato());
+        }
     }
 
     class Datodialog implements DatePickerDialog.OnDateSetListener {

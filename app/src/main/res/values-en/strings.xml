@@ -22,5 +22,6 @@
     <string name="leggTil"> </string>
     <string name="melding"> </string>
     <string name="tidsvelger"> </string>
+    <string name="cptest">Test content provider</string>
 
 </resources>
