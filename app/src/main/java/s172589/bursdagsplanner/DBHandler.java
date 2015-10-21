@@ -110,7 +110,6 @@ public class DBHandler extends SQLiteOpenHelper {
         format.setCalendar(dagens);
 
         String dagensF = format.format(dagens.getTime());
-        Log.v("FINNBURSDAG", "Dagens bursdagsdato" + dagensF);
 
         for(Kontakt k : alleKontakter){
             try {

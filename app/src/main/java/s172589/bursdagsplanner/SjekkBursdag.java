@@ -54,7 +54,7 @@ public class SjekkBursdag extends Service {
 
         PendingIntent pintent = PendingIntent.getService(this, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager alarm = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        alarm.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pintent);
+        alarm.setRepeating(AlarmManager.RTC_WAKEUP, cal_ny.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pintent);
         return super.onStartCommand(intent, flags, startId);
     }
 

@@ -19,9 +19,13 @@
     <string name="timestamp">time of day for messaging</string>
     <string name="autoMeld">Automatic messaging</string>
     <string name="IngenBurs">No birthdays!</string>
-    <string name="leggTil"> </string>
-    <string name="melding"> </string>
-    <string name="tidsvelger"> </string>
+    <string name="melding">Message</string>
+    <string name="tidsvelger">Settings</string>
     <string name="cptest">Test content provider</string>
+    <string name="app_name">s172589 s186571</string>
+    <string name="grat_noti_slutt">Hooah!</string>
+    <string name="grat_noti_start">Birhdaymessage was sent to:</string>
+    <string name="ingen_kontakt">No contacts to congratulate!</string>
+    <string name="leggTil">Add</string>
 
 </resources>

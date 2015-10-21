@@ -1,4 +1,6 @@
 <resources>
+    <string name="app_name">s172589 s186571</string>
+
     <!--Meny-->
     <string name="leggTilKnapp">Legg til</string>
     <string name="Meldingsknapp">Endre melding</string>
@@ -13,14 +15,17 @@
 
     <!--Meldingsvindu-->
     <string name="meldInfo">Melding som sendes når en kontakt har bursdag:</string>
+    <string name="ingen_kontakt">Ingen å gratulere idag!</string>
+    <string name="grat_noti_start">Gratulasjonsmelding ble sendt til:</string>
+    <string name="grat_noti_slutt">Hipp hipp hurra!</string>
 
     <!--Tidsvelger-->
     <string name="timestamp">tidspunkt for gratulasjon</string>
     <string name="autoMeld">Automatisk melding</string>
     <string name="IngenBurs">Ingen bursdagsbarn</string>
-    <string name="tidsvelger"> </string>
-    <string name="melding"> </string>
-    <string name="leggTil"> </string>
+    <string name="tidsvelger">Innstillinger</string>
+    <string name="melding">Melding</string>
     <string name="cptest">Test content provider</string>
+    <string name="leggTil">Legg til</string>
 
 </resources>

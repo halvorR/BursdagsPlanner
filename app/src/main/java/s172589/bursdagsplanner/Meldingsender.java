@@ -1,5 +1,8 @@
 package s172589.bursdagsplanner;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
@@ -26,6 +29,7 @@ public class Meldingsender extends Service implements Serializable {
     DBHandler db = new DBHandler(this);
     Kontakt kontakt;
     String melding;
+    Boolean sendt = true;
     SmsManager smsMan = SmsManager.getDefault();
 
     @Override
@@ -33,26 +37,35 @@ public class Meldingsender extends Service implements Serializable {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        test();
         sendMeld();
-//        test();
         return super.onStartCommand(intent, flags, startId);
     }
 
     public void test() {
         Toast.makeText(getApplicationContext(), "Sender melding", Toast.LENGTH_SHORT).show();
-        Log.d("MELDINGSENDER", "I meldingsender, sjekker hver gang jeg kjøres");
+        Log.d("MELDINGSENDER", "I meldingsender");
     }
     public boolean gratuler(Kontakt kontakt) {
         this.kontakt = kontakt;
         readFromFile();
         Log.d("Meldingssender/gratuler", "Leser melding. Inputstream:\r\n"+melding);
-        if (kontakt==null || melding.equals("")) {
-            Log.d("Meldingssender/gratuler","Kontakt kontakt var null, eller så var meldingen tom.");
-            return false;
+        if (kontakt==null) {
+            Log.d("Meldingssender/gratuler","Kontakt kontakt var null");
+            sendt = false;
+            return sendt;
+        }
+        if(melding.equals("")){
+            Log.d("Meldingssender/gratuler","Meldingen er tom.");
+            Toast.makeText(getApplicationContext(), "Melding ikke sendt. Vennligst lag melding!", Toast.LENGTH_SHORT).show();
+            sendt = false;
+            return sendt;
         }
         smsMan.sendTextMessage(Integer.toString(kontakt.getTlf()), null, melding, null, null);
-        Log.d("Meldingssender/gratuler", "Melding ble sendt med suksess, til "+kontakt.getNavn());
-        return true;
+        Log.d("Meldingssender/gratuler", "Melding ble sendt med suksess, til " + kontakt.getNavn());
+
+        sendt = true;
+        return sendt;
     }
 
     private String readFromFile() {
@@ -78,18 +91,43 @@ public class Meldingsender extends Service implements Serializable {
             Log.e("login activity", "Can not read file: " + e.toString());
         }
 
+        if(melding == null){
+            melding = "";
+        }
         return melding;
     }
 
     public void sendMeld() {
+        String meld = getResources().getString(R.string.grat_noti_start) +"\r\n";
         dagens = db.finnBursdag();
-        if(dagens != null){
+        if(!dagens.isEmpty()){
+
             for(Kontakt k : dagens) {
-                Log.d("SENDMELD()", "HER er kontaktene:" + k.getNavn());
                 gratuler(k);
+                meld += k.getNavn() + "\r\n";
             }
+
+            meld += getResources().getString(R.string.grat_noti_slutt);
+
+            if(sendt){
+                NotificationManager nM = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                Intent inte = new Intent(this, Startskjerm.class);
+                PendingIntent pI = PendingIntent.getActivity(this, 0, inte, 0);
+
+                Notification noti = new Notification.Builder(this)
+                        .setContentTitle(getResources().getString(R.string.app_name))
+                        .setContentText(meld)
+                        .setSmallIcon(R.drawable.crown)
+                        .setContentIntent(pI).build();
+
+                noti.flags |= Notification.FLAG_AUTO_CANCEL;
+                nM.notify(0, noti);
+            }
+
         } else {
-                Log.d("SENDMELD()", "Ingen kontakter har bursdag idag");
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.ingen_kontakt), Toast.LENGTH_SHORT).show();
         }
     }
+
+
 }
