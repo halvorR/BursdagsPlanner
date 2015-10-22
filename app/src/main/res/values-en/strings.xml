@@ -30,5 +30,12 @@
     <string name="melding_ikke_sendt">Empty message! Write something to send!</string>
     <string name="melding_sendt">Message already sent! Only one message per day!</string>
     <string name="lagt_til_tid_bak">Next message will be delivered tomorrow at the specified time!</string>
+    <string name="alle_felter">None of the required fields was filled!</string>
+    <string name="lengde_telefon">Phonenumber must be 8 numbers long!</string>
+    <string name="tom_dato">Pick a date!</string>
+    <string name="tom_melding">Messagefield can not be empty!</string>
+    <string name="tom_telefon">Fill in the phonenumber!</string>
+    <string name="tomt_navn">Fill in a name!</string>
+    <string name="finnes_allerede">A contact has already been made with the number:</string>
 
 </resources>

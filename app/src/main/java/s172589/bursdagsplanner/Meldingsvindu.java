@@ -39,15 +39,19 @@ public class Meldingsvindu extends AppCompatActivity {
         int dur = Toast.LENGTH_SHORT;
 
         Log.d("LEGGTIL","leggTil() kalt, meldinga er: " + meldingTekstFelt.getText().toString());
+        if(meldingTekstFelt.getText().toString().equals("")){
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.tom_melding), Toast.LENGTH_SHORT).show();
+            return;
+        } else {
+            try {
+                FileOutputStream fileout = openFileOutput(MY_FILE_NAME, Context.MODE_PRIVATE);
+                OutputStreamWriter outputWriter = new OutputStreamWriter(fileout);
+                outputWriter.write(meldingTekstFelt.getText().toString());
+                outputWriter.close();
 
-        try {
-            FileOutputStream fileout = openFileOutput(MY_FILE_NAME, Context.MODE_PRIVATE);
-            OutputStreamWriter outputWriter=new OutputStreamWriter(fileout);
-            outputWriter.write(meldingTekstFelt.getText().toString());
-            outputWriter.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 

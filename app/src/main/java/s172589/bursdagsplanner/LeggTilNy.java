@@ -122,10 +122,35 @@ public class LeggTilNy extends AppCompatActivity implements Serializable {
 
     // Legg til person
     public void leggTil(){
-        int telefonFeltInt = Integer.parseInt(telefonFelt.getText().toString());
         Context c = getApplicationContext();
         int dur = Toast.LENGTH_SHORT;
 
+        if(datoFelt.getText().toString().equals("") && navnFelt.getText().toString().equals("") && telefonFelt.getText().toString().equals("")) {
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.alle_felter), Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if(datoFelt.getText().toString().equals("")){
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.tom_dato), Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if(navnFelt.getText().toString().equals("")){
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.tomt_navn), Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if(telefonFelt.getText().toString().equals("")){
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.tom_telefon), Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if(telefonFelt.getText().length() > 8 || telefonFelt.getText().length() < 8) {
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.lengde_telefon), Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        int telefonFeltInt = Integer.parseInt(telefonFelt.getText().toString());
         if (k!=null) {
             db.slettKontakt(k);
             db.leggTilKontakt(new Kontakt(datoFelt.getText().toString(), navnFelt.getText().toString(),telefonFeltInt));
@@ -134,14 +159,18 @@ public class LeggTilNy extends AppCompatActivity implements Serializable {
             this.finish();
         } else {
 
-            db.leggTilKontakt(new Kontakt(datoFelt.getText().toString(), navnFelt.getText().toString(), telefonFeltInt));
-
             List<Kontakt> kontakter = db.finnAlleKontakter();
             for (Kontakt k : kontakter) {
-                String log = "\r\nLeggTilNy-klassen rapporterer at ny kontakt blir lagret, med data:" +
-                        "\r\nNavn: " + k.getNavn() + "\r\nTelefonnr: " + k.getTlf() + "\r\nDato: " + k.getDato();
-                Log.d("Navn: ", log);
+
+                if(k.getTlf() == telefonFeltInt){
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.finnes_allerede) + " " + k.getTlf(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
             }
+
+            db.leggTilKontakt(new Kontakt(datoFelt.getText().toString(), navnFelt.getText().toString(), telefonFeltInt));
+
             Toast toast = Toast.makeText(c, navnFelt.getText().toString() + " lagret! Hurra!", dur);
             toast.show();
             this.finish();

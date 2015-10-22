@@ -31,4 +31,13 @@
     <string name="cptest">Test content provider</string>
     <string name="leggTil">Legg til</string>
 
+    <!-- Validering -->
+    <string name="alle_felter">Ingen av feltene ble fylt ut!</string>
+    <string name="tomt_navn">Skriv inn et navn!</string>
+    <string name="tom_telefon">Skriv inn telefonnummer!</string>
+    <string name="tom_dato">Velg en dato!</string>
+    <string name="tom_melding">Meldingen må ikke være tom!</string>
+    <string name="lengde_telefon">Telefonnummeret må være 8 tall langt!</string>
+    <string name="finnes_allerede">Det finnes allerede en person med telefonnummer: </string>
+
 </resources>
