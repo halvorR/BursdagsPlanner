@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="#e2ccd675">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:background="#e2ccd675"
+        android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:background="#e2ccd675"
+        android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/timestamp"
+                android:id="@+id/textView"
+                android:textColor="#666"
+                android:layout_weight="1"
+                android:gravity="center_vertical|center_horizontal"
+                android:padding="20dp"
+                android:layout_gravity="center" />
+
+            <TimePicker
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/timePicker"
+                android:layout_gravity="center_vertical"
+                android:paddingRight="20dp" />
+        </LinearLayout>
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:columnCount="3"
+            android:rowCount="3"
+            android:clickable="false">
+
+            <Switch
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#666"
+                android:name="meldAvPå"
+                android:text="@string/autoMeld"
+                android:id="@+id/velgAvPå"
+                android:layout_weight="0.18"
+                android:defaultValue="true"
+                android:layout_row="0"
+                android:layout_column="0"
+                android:layout_gravity="center_horizontal"
+                android:padding="20dp" />
+
+            <ImageButton
+                style="?android:attr/buttonStyleSmall"
+                android:src="@drawable/ic_check_circle_grey_36dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/lagreTid"
+                android:layout_row="0"
+                android:layout_column="2"
+                android:background="#0000"
+                android:contentDescription="@string/akseptDesc"
+                android:layout_gravity="center_horizontal|right"
+                android:paddingRight="25dp"
+                android:paddingLeft="25dp" />
+
+            <ImageButton
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:src="@drawable/ic_cancel_grey_36dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/avbrytTid"
+                android:layout_row="0"
+                android:layout_column="1"
+                android:background="#0000"
+                android:contentDescription="@string/avbrytDesc"
+                android:layout_gravity="left|center_horizontal"
+                android:paddingLeft="50dp"
+                android:paddingRight="25dp" />
+        </GridLayout>
+    </LinearLayout>
+
+</ScrollView>
