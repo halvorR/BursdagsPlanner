@@ -29,5 +29,6 @@
     <string name="leggTil">Add</string>
     <string name="melding_ikke_sendt">Empty message! Write something to send!</string>
     <string name="melding_sendt">Message already sent! Only one message per day!</string>
+    <string name="lagt_til_tid_bak">Next message will be delivered tomorrow at the specified time!</string>
 
 </resources>
