@@ -30,7 +30,7 @@ public class SjekkBursdag extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Toast.makeText(getApplicationContext(), "SJEKKER BURSDAG", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Sjekker om noen har bursdag", Toast.LENGTH_SHORT).show();
         Log.d("SJEKKBURSDAG", "I SjekkBursdag");
         readTidFromFile();
         tidspunkt = timeOgMinutt(tid);
