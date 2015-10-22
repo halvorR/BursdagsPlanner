@@ -1,5 +1,4 @@
 package s172589.bursdagsplanner;
-// Endret navn på Startskjerm.
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -128,30 +127,26 @@ public class Startskjerm extends AppCompatActivity implements Serializable {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        Context c = getApplicationContext();
-        int dur = Toast.LENGTH_SHORT;
 
         switch(id) {
             case R.id.lag_ny:
-                Toast toast = Toast.makeText(c,"Lag ny klikket",dur);
-                toast.show();
 
                 Intent i = new Intent(this, LeggTilNy.class);
                 startActivityForResult(i,1);
-
                 return true;
+
             case R.id.settings:
-                toast = Toast.makeText(c,"endreTid klikket",dur);
-                toast.show();
 
                 Intent t = new Intent(this, Settings.class);
                 startActivity(t);
-
                 return true;
+
             case R.id.melding:
+
                 Intent m = new Intent(this, Meldingsvindu.class);
                 startActivity(m);
                 return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }

@@ -27,5 +27,7 @@
     <string name="grat_noti_start">Birhdaymessage was sent to:</string>
     <string name="ingen_kontakt">No contacts to congratulate!</string>
     <string name="leggTil">Add</string>
+    <string name="melding_ikke_sendt">Empty message! Write something to send!</string>
+    <string name="melding_sendt">Message already sent! Only one message per day!</string>
 
 </resources>

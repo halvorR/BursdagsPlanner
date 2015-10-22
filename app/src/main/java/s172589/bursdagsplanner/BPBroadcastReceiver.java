@@ -22,7 +22,7 @@ public class BPBroadcastReceiver extends BroadcastReceiver {
             context.startService(intEmt);
         } else {
             Toast.makeText(context, "I BroadcastReceiver etter switch", Toast.LENGTH_SHORT).show();
-            Log.d("BOOT", "I BroadcastReceiver etter switch");
+            Log.d("SWITCH", "I BroadcastReceiver etter switch");
 
             Intent intEmt = new Intent(context, SjekkBursdag.class);
             context.startService(intEmt);

@@ -31,7 +31,7 @@ public class SjekkBursdag extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Toast.makeText(getApplicationContext(), "SJEKKER BURSDAG", Toast.LENGTH_SHORT).show();
-        Log.d("SJEKKBURS", "I SjekkBursdag");
+        Log.d("SJEKKBURSDAG", "I SjekkBursdag");
         readTidFromFile();
         tidspunkt = timeOgMinutt(tid);
 
@@ -40,16 +40,23 @@ public class SjekkBursdag extends Service {
         Calendar cal = Calendar.getInstance();
         Calendar cal_ny = Calendar.getInstance();
         cal.setTimeInMillis(System.currentTimeMillis());
-        Log.d("CAL FØR SDF", "Uendret cal: " + cal.getTime() + " | Millisek: " + cal.getTimeInMillis());
+        Log.d("CAL", "cal: " + cal.getTime() + " | Millisek: " + cal.getTimeInMillis());
 
         cal_ny.set(Calendar.HOUR_OF_DAY, tidspunkt[0]);
         cal_ny.set(Calendar.MINUTE, tidspunkt[1]);
         cal_ny.set(Calendar.SECOND, 0);
 
-        Log.d("CAL etter ", "Endret: " + cal_ny.getTime()+ " | Millisek: " +cal_ny.getTimeInMillis());
+        Log.d("CAL_NY", "cal_ny " + cal_ny.getTime()+ " | Millisek: " +cal_ny.getTimeInMillis());
 
         long te = cal.getTimeInMillis() - cal_ny.getTimeInMillis();
         Log.v("DIFF", "Differansen er " +te);
+
+        if(cal.getTimeInMillis() > cal_ny.getTimeInMillis()){
+            cal_ny.add(Calendar.DATE, 1);
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.lagt_til_tid_bak), Toast.LENGTH_SHORT).show();
+            Log.v("CAL_NY", "Har den gått en dag forran?: " + cal_ny.getTime());
+        }
+
         Intent i = new Intent(this, Meldingsender.class);
 
         PendingIntent pintent = PendingIntent.getService(this, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -77,9 +84,9 @@ public class SjekkBursdag extends Service {
             }
         }
         catch (FileNotFoundException e) {
-            Log.e("login activity", "File not found: " + e.toString());
+            Log.e("login activity", "Fant ikke filen! " + e.toString());
         } catch (IOException e) {
-            Log.e("login activity", "Can not read file: " + e.toString());
+            Log.e("login activity", "Kan ikke lese fra filen: " + e.toString());
         }
         if (tid==null)
             tid="0:0";

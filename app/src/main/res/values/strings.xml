@@ -18,9 +18,12 @@
     <string name="ingen_kontakt">Ingen å gratulere idag!</string>
     <string name="grat_noti_start">Gratulasjonsmelding ble sendt til:</string>
     <string name="grat_noti_slutt">Hipp hipp hurra!</string>
+    <string name="melding_ikke_sendt">Tom melding! Lag en melding å sende!</string>
+    <string name="melding_sendt">Melding allerede sendt! Bare en melding per dag!</string>
+    <string name="lagt_til_tid_bak">Neste melding vil kjøres imorgen på gitt tidspunkt!</string>
 
-    <!--Tidsvelger-->
-    <string name="timestamp">tidspunkt for gratulasjon</string>
+    <!--Settings-->
+    <string name="timestamp">Tidspunkt for gratulasjon</string>
     <string name="autoMeld">Automatisk melding</string>
     <string name="IngenBurs">Ingen bursdagsbarn</string>
     <string name="tidsvelger">Innstillinger</string>
